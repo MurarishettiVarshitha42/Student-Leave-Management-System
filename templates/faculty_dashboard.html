@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Faculty dashboard{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow"><span></span> FACULTY WORKSPACE</div><h1>Leave approvals</h1><p class="muted">Review student requests and record your decision.</p></div><div class="heading-chip"><span class="dot amber-dot"></span> {{ counts.pending }} awaiting review</div></div>
+<div class="stat-grid">
+  <div class="stat-card"><div class="stat-top"><span>Total requests</span><span class="stat-icon purple">▤</span></div><div class="stat-value">{{ counts.total }}</div><div class="stat-foot">Across all students</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Pending</span><span class="stat-icon amber">◷</span></div><div class="stat-value">{{ counts.pending }}</div><div class="stat-foot">Need your attention</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Approved</span><span class="stat-icon green">✓</span></div><div class="stat-value">{{ counts.approved }}</div><div class="stat-foot">Approved requests</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Rejected</span><span class="stat-icon red">×</span></div><div class="stat-value">{{ counts.rejected }}</div><div class="stat-foot">Rejected requests</div></div>
+</div>
+<section class="panel"><div class="panel-heading"><div><h3>Pending applications</h3><p>Review the request details before making a decision.</p></div><span class="subtle-count">{{ requests|length }} pending</span></div>
+{% if requests %}<div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>LEAVE PERIOD</th><th>REASON</th><th>DECISION</th></tr></thead><tbody>
+{% for item in requests %}<tr><td><strong>{{ item.student_name }}</strong><span class="cell-sub">{{ item.student_email }}</span></td><td><strong>{{ item.start_date }}</strong><span class="cell-sub">to {{ item.end_date }}</span></td><td class="reason-cell">{{ item.reason }}</td><td><form class="review-form" method="post" action="{{ url_for('review_leave', leave_id=item.id) }}"><input name="comments" placeholder="Optional comment" maxlength="500" aria-label="Optional review comment"><div class="review-buttons"><button class="btn btn-small btn-approve" name="decision" value="Approved">✓ Approve</button><button class="btn btn-small btn-reject" name="decision" value="Rejected">× Reject</button></div></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state"><div class="empty-icon">✓</div><h4>You're all caught up</h4><p>There are no pending leave requests to review.</p></div>{% endif %}
+</section>
+{% endblock %}

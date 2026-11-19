@@ -1,0 +1,117 @@
+
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+
+{% block auth_content %}
+<div class="login-page">
+
+  <div class="login-visual">
+    <a class="brand brand-white" href="#">
+      <span class="brand-mark">L</span>
+      <span>Leave<span class="brand-light">Flow</span>
+        <small>STUDENT PORTAL</small>
+      </span>
+    </a>
+
+    <div class="visual-copy">
+      <div class="eyebrow light-eyebrow">
+        <span></span> YOUR CAMPUS, SIMPLIFIED
+      </div>
+
+      <h1>Leave the paperwork.<br>
+        <em>Keep moving forward.</em>
+      </h1>
+
+      <p>A simpler way to request, review, and manage student leave — all in one place.</p>
+
+      <div class="visual-stats">
+        <div><strong>01</strong><span>Apply online</span></div>
+        <div><strong>02</strong><span>Get reviewed</span></div>
+        <div><strong>03</strong><span>Track status</span></div>
+      </div>
+    </div>
+
+    <div class="visual-orb orb-one"></div>
+    <div class="visual-orb orb-two"></div>
+    <div class="visual-footer">A smarter campus experience</div>
+  </div>
+
+  <div class="login-panel">
+    <div class="login-form-wrap">
+
+      <div class="mobile-brand brand">
+        <span class="brand-mark">L</span>
+        <span>Leave<span class="brand-light">Flow</span></span>
+      </div>
+
+      <div class="eyebrow"><span></span> WELCOME BACK</div>
+
+      <h2>Sign in to your account</h2>
+      <p class="muted">Enter your details to access your workspace.</p>
+
+      <form method="post" class="form-stack">
+
+        <label for="email">Email address</label>
+        <div class="input-wrap">
+          <span>✉</span>
+          <input id="email" type="email" name="email"
+                 placeholder="you@university.edu" required
+                 autocomplete="username">
+        </div>
+
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <span>♙</span>
+          <input id="password" type="password" name="password"
+                 placeholder="Enter your password" required
+                 autocomplete="current-password">
+          <button type="button" class="show-password"
+                  id="showPassword">Show</button>
+        </div>
+
+        <button class="btn btn-primary btn-full" type="submit">
+          Sign in <span>→</span>
+        </button>
+
+      </form>
+
+      <p class="login-note" style="margin-top:18px">
+        New student?
+        <a href="{{ url_for('register') }}"
+           style="color:#7166e8;font-weight:700">
+          Create a student account
+        </a>
+      </p>
+
+      <div class="demo-box">
+        <strong>Demo accounts</strong>
+        <p>Use these accounts to explore the website.</p>
+
+        <div class="demo-row">
+          <span>Student</span>
+          <button type="button" data-email="student@example.com"
+                  data-password="Student123!">Fill details</button>
+        </div>
+
+        <div class="demo-row">
+          <span>Faculty</span>
+          <button type="button" data-email="faculty@example.com"
+                  data-password="Faculty123!">Fill details</button>
+        </div>
+
+        <div class="demo-row">
+          <span>Admin</span>
+          <button type="button" data-email="admin@example.com"
+                  data-password="Admin123!">Fill details</button>
+        </div>
+      </div>
+
+      <p class="login-note">
+        Academic prototype · Student Leave Management System
+      </p>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

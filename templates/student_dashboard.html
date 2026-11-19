@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Student dashboard{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow"><span></span> STUDENT WORKSPACE</div><h1>Hello, {{ session.get('name').split(' ')[0] }} <span class="wave">✦</span></h1><p class="muted">Here's an overview of your leave applications.</p></div><a class="btn btn-primary" href="{{ url_for('apply_leave') }}"><span>＋</span> Apply for leave</a></div>
+<div class="stat-grid">
+  <div class="stat-card"><div class="stat-top"><span>Total requests</span><span class="stat-icon purple">▤</span></div><div class="stat-value">{{ counts.total }}</div><div class="stat-foot">All your applications</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Pending</span><span class="stat-icon amber">◷</span></div><div class="stat-value">{{ counts.pending }}</div><div class="stat-foot"><span class="dot amber-dot"></span> Awaiting review</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Approved</span><span class="stat-icon green">✓</span></div><div class="stat-value">{{ counts.approved }}</div><div class="stat-foot"><span class="dot green-dot"></span> Approved requests</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Rejected</span><span class="stat-icon red">×</span></div><div class="stat-value">{{ counts.rejected }}</div><div class="stat-foot"><span class="dot red-dot"></span> Review decisions</div></div>
+</div>
+<div class="content-grid">
+  <section class="panel requests-panel"><div class="panel-heading"><div><h3>My leave requests</h3><p>Track your recent applications and decisions.</p></div><span class="subtle-count">{{ requests|length }} records</span></div>
+  {% if requests %}
+  <div class="table-wrap"><table><thead><tr><th>LEAVE PERIOD</th><th>REASON</th><th>STATUS</th><th>APPLIED</th><th></th></tr></thead><tbody>
+  {% for item in requests %}<tr><td><strong>{{ item.start_date }}</strong><span class="cell-sub">to {{ item.end_date }}</span></td><td class="reason-cell">{{ item.reason }}</td><td><span class="status status-{{ item.status|lower }}">{{ item.status }}</span></td><td>{{ item.applied_at[:10] }}</td><td>{% if item.status == 'Pending' %}<form method="post" action="{{ url_for('cancel_leave', leave_id=item.id) }}" onsubmit="return confirm('Cancel this pending request?')"><button class="text-action danger-text" type="submit">Cancel</button></form>{% endif %}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state"><div class="empty-icon">▤</div><h4>No applications yet</h4><p>Your leave requests will appear here after you apply.</p><a class="btn btn-primary" href="{{ url_for('apply_leave') }}">Create first request</a></div>{% endif %}
+  </section>
+  <aside class="panel chart-panel"><div class="panel-heading"><div><h3>Request overview</h3><p>Your application status at a glance.</p></div></div><div class="chart-wrap"><canvas id="leaveChart" aria-label="Leave request status chart"></canvas>{% if counts.total == 0 %}<div class="chart-empty">Your chart will appear after your first request.</div>{% endif %}</div><div class="chart-legend"><span><i class="legend-dot pending-color"></i>Pending <b>{{ counts.pending }}</b></span><span><i class="legend-dot approved-color"></i>Approved <b>{{ counts.approved }}</b></span><span><i class="legend-dot rejected-color"></i>Rejected <b>{{ counts.rejected }}</b></span></div></aside>
+</div>
+{% endblock %}
+{% block scripts %}<script>drawLeaveChart({{ counts.pending }}, {{ counts.approved }}, {{ counts.rejected }});</script>{% endblock %}

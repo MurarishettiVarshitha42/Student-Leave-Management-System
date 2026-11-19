@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Apply for leave{% endblock %}
+{% block breadcrumb %}Apply for leave{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow"><span></span> LEAVE MANAGEMENT</div><h1>Apply for leave</h1><p class="muted">Fill in the details below to submit a new request.</p></div><a class="btn btn-secondary" href="{{ url_for('dashboard') }}">← Back to dashboard</a></div>
+<div class="form-layout"><section class="panel application-panel"><div class="panel-heading"><div><h3>Leave application form</h3><p>Fields marked with * are required.</p></div><span class="form-step">NEW REQUEST</span></div>
+<form method="post" class="leave-form" id="leaveForm">
+  <div class="form-two"><div class="field"><label for="start_date">Start date <span>*</span></label><input id="start_date" type="date" name="start_date" min="{{ current_year }}-01-01" required><small>First day of your leave</small></div><div class="field"><label for="end_date">End date <span>*</span></label><input id="end_date" type="date" name="end_date" required><small>Last day of your leave</small></div></div>
+  <div class="field"><label for="reason">Reason for leave <span>*</span></label><textarea id="reason" name="reason" rows="5" maxlength="500" minlength="5" placeholder="Briefly explain why you need leave..." required></textarea><div class="field-meta"><small>Provide enough detail for your faculty advisor.</small><small id="charCount">0 / 500</small></div></div>
+  <div class="notice"><span>ⓘ</span><p>Your application will be marked <strong>Pending</strong> until a faculty member reviews it. Please check your dates before submitting.</p></div>
+  <div class="form-actions"><a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Cancel</a><button class="btn btn-primary" type="submit">Submit application <span>→</span></button></div>
+</form></section>
+<aside class="panel tips-panel"><div class="tips-icon">✦</div><h3>Before you submit</h3><p class="muted">A few things to remember for a smooth approval process.</p><div class="tip-item"><span>01</span><div><strong>Check your dates</strong><p>Make sure the start and end dates are correct.</p></div></div><div class="tip-item"><span>02</span><div><strong>Explain your reason</strong><p>Use a clear, respectful explanation.</p></div></div><div class="tip-item"><span>03</span><div><strong>Track your request</strong><p>Return to your dashboard to see the latest status.</p></div></div></aside></div>
+{% endblock %}
